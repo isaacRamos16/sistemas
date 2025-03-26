@@ -1,3 +1,48 @@
+@php
+    $user = auth()->user();
+
+    $groups = [
+           [
+            'name' => 'Dashboard',
+            'icon' => 'home',
+            'url' => route('dashboard'),
+            'current' => request()->routeIs('dashboard'),
+        ],
+    ];
+
+    if ($user->id_cargo === 1) {
+        $groups = array_merge($groups, [
+     
+      
+            [
+                'name' => 'cargo',
+                'icon' => 'briefcase',
+                'url' => route('admin.cargo.index'),
+                'current' => request()->routeIs('admin.cargo'),
+            ],
+            [
+                'name' => 'status Usuario',
+                'icon' => 'check-circle',
+                'url' => route('admin.status.index'),
+                'current' => request()->routeIs('admin.status'),
+            ],
+            [
+            'name' => 'usuarios',
+            'icon' => 'users',
+            'url' => route('admin.usuarios.index'),
+            'current' => request()->routeIs('admin.usuarios'),
+    ],
+            [
+            'name' => 'Estado Equipo',
+            'icon' => 'shield-check', // o el que prefieras
+            'url' => route('admin.estado-equipo.index'),
+            'current' => request()->routeIs('admin.estado-equipo.*'),
+        ]
+
+        ]);
+    }
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
@@ -11,14 +56,25 @@
                 <x-app-logo />
             </a>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                </flux:navlist.group>
+
+            <flux:navlist variant="outline" class="flex flex-col gap-1">
+                @foreach ($groups as $link)
+                    <flux:navlist.item
+                        :icon="$link['icon']"
+                        :href="$link['url']"
+                        :current="$link['current']"
+                        wire:navigate
+                    >
+                        {{ $link['name'] }}
+                    </flux:navlist.item>
+                @endforeach
             </flux:navlist>
+            
+            
 
-            <flux:spacer />
-
+            
+            <flux:spacer /> 
+ 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
                 {{ __('Repository') }}
@@ -128,5 +184,48 @@
         {{ $slot }}
 
         @fluxScripts
+
+        @if(session('success'))
+        <script>
+            Swal.fire({
+                title: '¡Éxito!',
+                text: "{{ session('success') }}",
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            });
+        </script>
+    @endif
+    
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                title: 'Error',
+                text: "{{ session('error') }}",
+                icon: 'error'
+            });
+        </script>
+    @endif
+    
+        
+
+    <script>
+        new DataTable('#example', {
+    columnDefs: [
+        {
+            className: 'dtr-control',
+            orderable: false,
+            target: 0
+        }
+    ],
+    order: [1, 'asc'],
+    responsive: {
+        details: {
+            type: 'column',
+            target: 'tr'
+        }
+    }
+});
+    </script>
+
     </body>
 </html>
