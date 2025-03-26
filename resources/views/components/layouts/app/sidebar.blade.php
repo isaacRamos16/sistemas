@@ -1,8 +1,8 @@
-@php
+@php 
     $user = auth()->user();
 
-    $groups = [
-           [
+    $main = [
+        [
             'name' => 'Dashboard',
             'icon' => 'home',
             'url' => route('dashboard'),
@@ -10,36 +10,35 @@
         ],
     ];
 
+    $favorites = [];
+
     if ($user->id_cargo === 1) {
-        $groups = array_merge($groups, [
-     
-      
+        $favorites = [
             [
-                'name' => 'cargo',
+                'name' => 'Usuarios',
+                'icon' => 'users',
+                'url' => route('admin.usuarios.index'),
+                'current' => request()->routeIs('admin.usuarios'),
+            ],
+            [
+                'name' => 'Cargo',
                 'icon' => 'briefcase',
                 'url' => route('admin.cargo.index'),
                 'current' => request()->routeIs('admin.cargo'),
             ],
             [
-                'name' => 'status Usuario',
+                'name' => 'Status Usuario',
                 'icon' => 'check-circle',
                 'url' => route('admin.status.index'),
                 'current' => request()->routeIs('admin.status'),
             ],
             [
-            'name' => 'usuarios',
-            'icon' => 'users',
-            'url' => route('admin.usuarios.index'),
-            'current' => request()->routeIs('admin.usuarios'),
-    ],
-            [
-            'name' => 'Estado Equipo',
-            'icon' => 'shield-check', // o el que prefieras
-            'url' => route('admin.estado-equipo.index'),
-            'current' => request()->routeIs('admin.estado-equipo.*'),
-        ]
-
-        ]);
+                'name' => 'Estado Equipo',
+                'icon' => 'shield-check',
+                'url' => route('admin.estado-equipo.index'),
+                'current' => request()->routeIs('admin.estado-equipo.*'),
+            ],
+        ];
     }
 @endphp
 
@@ -58,19 +57,36 @@
 
 
             <flux:navlist variant="outline" class="flex flex-col gap-1">
-                @foreach ($groups as $link)
-                    <flux:navlist.item
-                        :icon="$link['icon']"
-                        :href="$link['url']"
-                        :current="$link['current']"
-                        wire:navigate
-                    >
-                        {{ $link['name'] }}
-                    </flux:navlist.item>
-                @endforeach
-            </flux:navlist>
-            
-            
+    
+            {{-- Ítems principales --}}
+            @foreach ($main as $link)
+                <flux:navlist.item
+                    :icon="$link['icon']"
+                    :href="$link['url']"
+                    :current="$link['current']"
+                    wire:navigate
+                >
+                    {{ $link['name'] }}
+                </flux:navlist.item>
+            @endforeach
+        
+            {{-- Grupo Favorites (solo si hay ítems) --}}
+            @if(count($favorites))
+                <flux:navlist.group expandable heading="Admin" class="hidden lg:grid">
+                    @foreach ($favorites as $link)
+                        <flux:navlist.item
+                            :icon="$link['icon']"
+                            :href="$link['url']"
+                            :current="$link['current']"
+                            wire:navigate
+                        >
+                            {{ $link['name'] }}
+                        </flux:navlist.item>
+                    @endforeach
+                </flux:navlist.group>
+            @endif
+        
+        </flux:navlist>
 
             
             <flux:spacer /> 
