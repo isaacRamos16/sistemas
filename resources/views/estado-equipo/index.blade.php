@@ -48,7 +48,7 @@
 
                         </div>
                         <div>
-                            <form action="{{ route('admin.status.destroy', $item->id_estado_equipo) }}" method="POST" class="delete-form">
+                            <form action="{{ route('admin.estado-equipo.destroy', $item->id_estado_equipo) }}" method="POST" class="delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <flux:button type="submit" class="btn-delete" variant="ghost">
@@ -63,7 +63,7 @@
 
             {{-- Modal Editar --}}
             <flux:modal name="edit-estado-equipo-{{ $item->id_estado_equipo }}" class="md:w-96">
-                <form action="{{ route('admin.status.update', $item->id_estado_equipo) }}" method="POST">
+                <form action="{{ route('admin.estado-equipo.destroy', $item->id_estado_equipo) }}" method="POST" class="delete-form">
                     @csrf
                     @method('PUT')
 
