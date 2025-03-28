@@ -10,8 +10,6 @@
         Agregar Estado Equipo
       </a>
 
-
-
       
       <table id="example" class="display compact nowrap mt-8" style="width:100%">
     <thead>

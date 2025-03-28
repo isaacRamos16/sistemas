@@ -6,6 +6,11 @@ use App\Http\Controllers\admin\usuariosController;
 use App\Http\Controllers\admin\CargoController;
 use App\Http\Controllers\admin\StatusController;
 use App\Http\Controllers\admin\EstadoEquipoController;
+use App\Http\Controllers\admin\EquipoController;
+use App\Http\Controllers\admin\TipoEquipoController;
+use App\Http\Controllers\admin\TipoArchivoController;
+use App\Http\Controllers\admin\ArchivosController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,14 +55,19 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/estado-equipo/{estado-equipo}', [EstadoEquipoController::class, 'destroy'])->name('admin.estado-equipo.destroy');
     
 
-
     
     Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('usuarios', usuariosController::class);
         Route::resource('cargo', CargoController::class); // ✅ Esta línea es clave
         Route::resource('status', StatusController::class); // ✅ Esta línea es clave
         Route::resource('estado-equipo', EstadoEquipoController::class);
+        Route::resource('equipo', EquipoController::class);
+        Route::resource('tipo_equipo', TipoEquipoController::class);
+        Route::resource('tipo_archivo', TipoArchivoController::class);
+        Route::resource('archivos', ArchivosController::class);
 
+    
+        
         
     });
 

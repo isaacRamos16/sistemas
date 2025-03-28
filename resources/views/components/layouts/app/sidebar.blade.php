@@ -11,8 +11,11 @@
     ];
 
     $favorites = [];
+    $equipos = [];
+    $archivos = [];
 
     if ($user->id_cargo === 1) {
+        
         $favorites = [
             [
                 'name' => 'Usuarios',
@@ -32,16 +35,49 @@
                 'url' => route('admin.status.index'),
                 'current' => request()->routeIs('admin.status'),
             ],
+        ];
+
+        $equipos = [
+            
             [
                 'name' => 'Estado Equipo',
                 'icon' => 'shield-check',
                 'url' => route('admin.estado-equipo.index'),
                 'current' => request()->routeIs('admin.estado-equipo.*'),
             ],
+            [
+                'name' => 'Tipo Equipo',
+                'icon' => 'layout-grid',
+                'url' => route('admin.tipo_equipo.index'),
+                'current' => request()->routeIs('admin.tipo_equipo.*'),
+            ],
+            [
+                'name' => 'Equipo',
+                'icon' => 'server', // puedes usar otro icono como 'cpu' o 'database'
+                'url' => route('admin.equipo.index'),
+                'current' => request()->routeIs('admin.equipo.*'),
+            ],
         ];
-    }
-@endphp
 
+        $archivos = [
+            
+            [
+                'name' => 'Tipo Archivo',
+                'icon' => 'document-text',
+                'url' => route('admin.tipo_archivo.index'),
+                'current' => request()->routeIs('admin.tipo_archivo.*'),
+            ],
+            [
+                'name' => 'Archivos',
+                'icon' => 'document-text',
+                'url' => route('admin.archivos.index'),
+                'current' => request()->routeIs('admin.archivos.*'),
+            ],
+        ];
+
+    } 
+@endphp
+ 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
@@ -85,6 +121,44 @@
                     @endforeach
                 </flux:navlist.group>
             @endif
+
+
+             {{-- Grupo Favorites (solo si hay ítems) --}}
+             @if(count($equipos))
+             <flux:navlist.group expandable heading="Equipo" class="hidden lg:grid">
+                 @foreach ($equipos as $link)
+                     <flux:navlist.item
+                         :icon="$link['icon']"
+                         :href="$link['url']"
+                         :current="$link['current']"
+                         wire:navigate
+                     >
+                         {{ $link['name'] }}
+                     </flux:navlist.item>
+                 @endforeach
+             </flux:navlist.group>
+         @endif
+
+
+               {{-- Grupo Favorites (solo si hay ítems) --}}
+               @if(count($archivos))
+               <flux:navlist.group expandable heading="Documentos" class="hidden lg:grid">
+                   @foreach ($archivos as $link)
+                       <flux:navlist.item
+                           :icon="$link['icon']"
+                           :href="$link['url']"
+                           :current="$link['current']"
+                           wire:navigate
+                       >
+                           {{ $link['name'] }}
+                       </flux:navlist.item>
+                   @endforeach
+               </flux:navlist.group>
+           @endif
+
+
+
+
         
         </flux:navlist>
 
