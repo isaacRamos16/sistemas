@@ -75,7 +75,7 @@
                     @enderror
                 </div>
 
-
+ 
                 {{-- Tipo Equipo --}}
                 <div>
                     <label for="id_tipo_equipo" class="block mb-2 text-sm font-medium text-gray-700 dark:text-white">Tipo Equipo</label>

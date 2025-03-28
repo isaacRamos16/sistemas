@@ -14,7 +14,8 @@ class Archivos extends Model
     protected $fillable = [
         'id_tipo_archivo',
         'descripcion_archivo',
-        'fecha_registro',
+        'file',
+        'fecha_registro',        
     ];
 
     // 🔗 Relación con estado_equipo

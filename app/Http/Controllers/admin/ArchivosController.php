@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Archivos;
 use App\Models\TipoArchivo;
 
-class ArchivosController extends Controller 
+class ArchivosController extends Controller  
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,9 @@ class ArchivosController extends Controller
      */
     public function create()
     {
-        //
+        $archivos = TipoArchivo::all(); // ✅
+
+        return view('archivos.create', compact('archivos'));
     }
 
     /**
