@@ -22,7 +22,8 @@ class EstadoArchivoController extends Controller
      */
     public function create()
     {
-        //
+        $estado_archivo = EstadoArchivo::all();
+        return view('estado_archivo.create', compact('estado_archivo'));
     }
 
     /**
@@ -30,7 +31,16 @@ class EstadoArchivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'descripcion' => 'required|string|unique:estado_archivo,descripcion',
+        ]);
+
+        EstadoArchivo::create([
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect()->route('admin.estado_archivo.index')
+            ->with('success', 'Estado Archivo creado correctamente.');
     }
 
     /**
@@ -54,7 +64,18 @@ class EstadoArchivoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $estado_archivo = EstadoArchivo::findOrFail($id);
+
+        $request->validate([
+            'descripcion' => 'required|string|unique:estado_archivo,descripcion,' . $estado_archivo->id_estado_archivo . ',id_estado_archivo',
+        ]);
+
+        $estado_archivo->update([
+            'descripcion' => $request->descripcion,
+        ]);
+
+        return redirect()->route('admin.estado_archivo.index')
+            ->with('success', 'Estado Archivo actualizado correctamente.');
     }
 
     /**

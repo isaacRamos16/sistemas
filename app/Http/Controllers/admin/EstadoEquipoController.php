@@ -15,8 +15,7 @@ class EstadoEquipoController extends Controller
     {
         $estado_equipo = EstadoEquipo::all();
         return view('estado-equipo.index', compact('estado_equipo'));
-       
-    }  
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -40,7 +39,7 @@ class EstadoEquipoController extends Controller
         ]);
 
         return redirect()->route('admin.estado-equipo.index')
-                         ->with('success', 'Estado Equipo creado correctamente.');
+            ->with('success', 'Estado Equipo creado correctamente.');
     }
 
     /**
