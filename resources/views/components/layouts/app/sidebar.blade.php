@@ -66,6 +66,12 @@
                 'icon' => 'document-text',
                 'url' => route('admin.tipo_archivo.index'),
                 'current' => request()->routeIs('admin.tipo_archivo.*'),
+            ],          
+            [
+                'name' => 'Estado Archivo',
+                'icon' => 'document-text',
+                'url' => route('admin.estado_archivo.index'),
+                'current' => request()->routeIs('admin.estado_archivo.*'),
             ],
             [
                 'name' => 'Archivos',

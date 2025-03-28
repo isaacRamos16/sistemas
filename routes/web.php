@@ -10,7 +10,7 @@ use App\Http\Controllers\admin\EquipoController;
 use App\Http\Controllers\admin\TipoEquipoController;
 use App\Http\Controllers\admin\TipoArchivoController;
 use App\Http\Controllers\admin\ArchivosController;
-
+use App\Http\Controllers\admin\EstadoArchivoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('tipo_equipo', TipoEquipoController::class);
         Route::resource('tipo_archivo', TipoArchivoController::class);
         Route::resource('archivos', ArchivosController::class);
-
+        Route::resource('estado_archivo', EstadoArchivoController::class);
     
         
         
